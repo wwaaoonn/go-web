@@ -10,23 +10,9 @@ import (
 func main() {
 	fmt.Println("start!")
 
-	html := `<!DOCTYPE html>
-	<html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Document</title>
-	</head>
-	<body>
-		<h1>Index</h1>
-		<p>This is sample web page.</p>
-	</body>
-	</html>`
-
-	tf, er := template.New("index").Parse(html)
+	tf, er := template.ParseFiles("templates/hello.html")
 	if er != nil {
-		log.Fatal(er)
+		tf, _ = template.New("index").Parse("<html><body><h1>Sorry, Not found...</h1></body></html>")
 	}
 	hh := func(w http.ResponseWriter, r *http.Request) {
 		er = tf.Execute(w, nil)
