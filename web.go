@@ -8,5 +8,11 @@ import (
 func main() {
 	fmt.Println("start!")
 
-	http.ListenAndServe(":8080", http.FileServer(http.Dir(".")))
+	hh := func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("Hello, This is GO-server!!"))
+	}
+
+	http.HandleFunc("/hello", hh)
+
+	http.ListenAndServe(":8080", nil)
 }
